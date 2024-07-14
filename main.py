@@ -12,10 +12,12 @@ def main():
 
 
 @app.get("/blog")
-def main():
-  return  {
-    "blog": blog
-  }
+def main(start: int = 1, end: int = 10):
+    if start < 0:
+        raise HTTPException(status_code=400, detail="Start must be greater than or equal to 0")
+    return {
+        "blog": blog[start-1:end]
+    }
   
 @app.get('/blog/{id}')
 def get_blog(id: int):
