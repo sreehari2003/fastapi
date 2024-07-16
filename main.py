@@ -1,13 +1,16 @@
 from fastapi import FastAPI,HTTPException;
 from blogs import blog
-
+from database import get_db_connection
 
 app = FastAPI()
 
 @app.get("/")
 def main():
-  return  {
-    "ok":True
+    connection = get_db_connection();
+    if connection is None:
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+    return  {
+        "ok":True
   }
 
 
